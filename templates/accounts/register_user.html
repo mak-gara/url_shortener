@@ -1,0 +1,90 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col text-center mb-3" style="margin-top: 50px;">
+            <h4>Registration</h4>
+        </div>
+    </div>
+    <div class="row mb-10">
+        <div class="col-4 mx-auto">
+            <form method="post">
+                {% csrf_token %}
+                <!-- Username input -->
+                <div class="form-outline mb-4">
+                    <input type="text" id="username" name="username" class="form-control">
+                    <label class="form-label" for="username" style="margin-left: 0px;">Username</label>
+                    <div class="form-notch">
+                        <div class="form-notch-leading" style="width: 9px;"></div>
+                        <div class="form-notch-middle" style="width: 66.4px;"></div>
+                        <div class="form-notch-trailing"></div>
+                    </div>
+                </div>
+
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                    <input type="email" id="email" name="email" class="form-control">
+                    <label class="form-label" for="email" style="margin-left: 0px;">Email</label>
+                    <div class="form-notch">
+                        <div class="form-notch-leading" style="width: 9px;"></div>
+                        <div class="form-notch-middle" style="width: 40px;"></div>
+                        <div class="form-notch-trailing"></div>
+                    </div>
+                </div>
+
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                    <input type="password" id="password1" name="password1" class="form-control">
+                    <label class="form-label" for="password1" style="margin-left: 0px;">Password</label>
+                    <div class="form-notch">
+                        <div class="form-notch-leading" style="width: 9px;"></div>
+                        <div class="form-notch-middle" style="width: 64.8px;"></div>
+                        <div class="form-notch-trailing"></div>
+                    </div>
+                </div>
+
+                <!-- Repeat Password input -->
+                <div class="form-outline mb-4">
+                    <input type="password" id="password2" name="password2" class="form-control">
+                    <label class="form-label" for="password2" style="margin-left: 0px;">Repeat
+                        password</label>
+                    <div class="form-notch">
+                        <div class="form-notch-leading" style="width: 9px;"></div>
+                        <div class="form-notch-middle" style="width: 106.4px;"></div>
+                        <div class="form-notch-trailing"></div>
+                    </div>
+                </div>
+
+                <!-- First Name -->
+                <div class="form-outline mb-4">
+                    <input type="text" id="first_name" name="first_name" class="form-control">
+                    <label class="form-label" for="first_name" style="margin-left: 0px;">First name</label>
+                    <div class="form-notch">
+                        <div class="form-notch-leading" style="width: 9px;"></div>
+                        <div class="form-notch-middle" style="width: 66.4px;"></div>
+                        <div class="form-notch-trailing"></div>
+                    </div>
+                </div>
+
+                <!-- Last Name -->
+                <div class="form-outline mb-4">
+                    <input type="text" id="last_name" name="last_name" class="form-control">
+                    <label class="form-label" for="last_name" style="margin-left: 0px;">Last name</label>
+                    <div class="form-notch">
+                        <div class="form-notch-leading" style="width: 9px;"></div>
+                        <div class="form-notch-middle" style="width: 66.4px;"></div>
+                        <div class="form-notch-trailing"></div>
+                    </div>
+                </div>
+
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block mb-3">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

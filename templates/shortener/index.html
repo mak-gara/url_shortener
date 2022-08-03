@@ -1,0 +1,147 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block bg_image %}
+<!-- Background image -->
+<div class="p-5 text-center bg-image mb-4" style="
+background-image: url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80');
+height: 600px;
+">
+    <div class="mask" style="
+    background-color: rgba(0, 0, 0, 0.6);
+">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="text-white">
+                <h1 class="mb-3">Create Short Links</h1>
+                <h4 class="mb-3">Why use ugly long links?<br>Customize, shorten links here absolutely free!</h4>
+                <a class="btn btn-outline-light btn-lg mb-1" href="#link-shortener" role="button">Get Started</a>
+                <a class="btn btn-outline-light btn-lg mb-1" href="#!" role="button">Get a Quote</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Background image -->
+{% endblock %}
+
+{% block content %}
+<!-- Content Block -->
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-lg-6 col-md-8 col-sm-12 mx-auto border mb-4" id="link-shortener">
+            <div class="card-body">
+                <h5 class="card-title text-center">
+                    Paste the URL to be shortened
+                </h5>
+                <form id="link-form">
+                    {% csrf_token %}
+                    <div class="row my-4 gy-2">
+                        <div class="col-md-8 col-sm-12">
+                            <div class="form-outline">
+                                <input type="text" id="link" name="link" maxlength="3000" class="form-control">
+                                <label class="form-label" id="link-label" for="link">Your link</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <button type="submit" class="btn btn-primary btn-block short">Shorten</button>
+                        </div>
+                    </div>
+                </form>
+                <p class="card-text" id="link-form-description">
+                    URL Shortener is a free tool to shorten a URL or reduce a link.
+                    Use our URL Shortener to create a shortened link making it easy to remember
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-md-8 col-sm-12 mx-auto border mb-4">
+            <div class="card-body">
+                <h5 class="card-title text-center mb-4">
+                    Want More? Create An Account!
+                </h5>
+                <p class="card-text">
+                    For full use, create an account. Useful features will become available to you, such as
+                    link management, customization, tracking the number of transitions
+                </p>
+                <div class="buttons text-center">
+                    <a href="{% url 'accounts:login' %}" class="btn btn-primary mb-1">Log in</a>
+                    <a href="{% url 'accounts:register' %}" class="btn btn-primary mb-1">Sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <h4 class="text-center mb-3">Frequently asked questions</h4>
+        <div class="accordion mb-5" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-mdb-toggle="collapse"
+                        data-mdb-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                        aria-controls="panelsStayOpen-collapseOne">
+                        What is a URL Shortener
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                    aria-labelledby="headingOne">
+                    <div class="accordion-body">
+                        A URL shortener, also known as a link shortener, seems like a simple tool, but it is a
+                        service that can have a dramatic impact on your marketing efforts.
+                        Link shorteners work by transforming any long URL into a shorter, more readable link. When a
+                        user clicks the shortened version, they’re automatically forwarded to the destination URL.
+                        Think of a short URL as a more descriptive and memorable nickname for your long webpage
+                        address. You can, for example, use a short URL like bit.ly/CelebrateBitly so people will
+                        have a good idea about where your link will lead before they click it.
+                        If you’re contributing content to the online world, you need a URL shortener.
+                        Make your URLs stand out with our easy to use free link shortener above.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
+                        data-mdb-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseTwo">
+                        Benefits of a Short URL
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                    <div class="accordion-body">
+                        How many people can even remember a long web address, especially if it has tons of
+                        characters and symbols? A short URL can make your link more memorable. Not only does it
+                        allow people to easily recall and share your link with others, it can also dramatically
+                        improve traffic to your content.
+                        On a more practical side, a short URL is also easier to incorporate into your collateral –
+                        whether you’re looking to engage with your customers offline or online.
+                        Bitly is the best URL shortener for everyone, from influencers to small brands to large
+                        enterprises, who are looking for a simple way to create, track and manage their links.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-mdb-toggle="collapse"
+                        data-mdb-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseThree">
+                        Accordion Item #3
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+                    aria-labelledby="headingThree">
+                    <div class="accordion-body">
+                        <strong>This is the third item's accordion body.</strong> It is hidden by default,
+                        until the collapse plugin adds the appropriate classes that we use to style each
+                        element. These classes control the overall appearance, as well as the showing and
+                        hiding via CSS transitions. You can modify any of this with custom CSS or overriding
+                        our default variables. It's also worth noting that just about any HTML can go within
+                        the <code>.accordion-body</code>, though the transition does limit overflow.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Content Block -->
+{% endblock %}

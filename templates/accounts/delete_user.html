@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Delete profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col text-center mb-3" style="margin-top: 50px;">
+            <h4>Delete profile</h4>
+        </div>
+    </div>
+    <div class="row mb-10">
+        <div class="col-4 mx-auto">
+            <form action="{% url 'accounts:profile_delete' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-block mb-4">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
