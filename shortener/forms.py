@@ -1,7 +1,6 @@
 import re
 from urllib.parse import urlparse
 from django import forms
-from django.core.validators import URLValidator
 
 from .models import Link
 from .services import link_already_exists

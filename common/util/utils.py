@@ -1,3 +1,6 @@
+import qrcode
+from pathlib import Path
+from qrcode.image.svg import SvgPathImage
 from django.utils.crypto import get_random_string
 
 def get_unique_slug_or_existing(obj, length):
@@ -21,3 +24,8 @@ def get_client_ip(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
+def generate_and_save_qrcode(link, path):
+    img = qrcode.make(link, image_factory=SvgPathImage)
+    img.save(path)
+    

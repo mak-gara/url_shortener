@@ -1,23 +1,30 @@
+from pathlib import Path
 from django.db import models
 from django.urls import reverse_lazy
-from common.util.utils import get_unique_slug_or_existing
+from django.core.files import File
+from common.util.utils import get_unique_slug_or_existing, generate_and_save_qrcode
 from accounts.models import CustomUser
+
 
 class Link(models.Model):
     long_link = models.URLField()
     slug = models.SlugField('Slug for short link', unique=True, blank=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
                   related_name='links', blank=True, null=True)
-
+    qrcode = models.ImageField(upload_to='qrcodes', blank=True, null=True)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     
     def get_absolute_url(self):
-        return reverse_lazy('redirect_somewhere', kwargs={'slug':self.slug})
+        return reverse_lazy('shortener:redirect_somewhere', kwargs={'slug':self.slug})
     
     def save(self, *args, **kwargs):
         self.slug = get_unique_slug_or_existing(self, length=7)
+        path = Path.cwd() / 'media' / 'qrcodes' / f'{self.slug}.svg'
+        generate_and_save_qrcode(f'http://127.0.0.1/{self.slug}', path)
+        self.qrcode = f'qrcodes/{self.slug}.svg'
         super().save(*args, **kwargs)
 
     def __str__(self):
