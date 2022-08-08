@@ -1,1 +1,109 @@
-profile
+{% extends 'base/base.html' %}
+
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row mb-5" style="margin-top: 50px;">
+        <div class="col-3">
+            <h4 class="mb-4">Your info</h4>
+            <div class="card border">
+                <div class="card-body">
+                    <p>Username: <strong>{{ user.username }}</strong></p>
+                    <p>Email: <strong>{{ user.email }}</strong></p>
+                    <p>First name: <strong>{{ user.first_name }}</strong></p>
+                    <p>Last name: <strong>{{ user.last_name }}</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+            <h4 class="mb-4">Your links</h4>
+            <div class="card border mb-2">
+                <div class="card-body">
+                    <div class="row">
+                        {% for link in links %}
+                        <div class="col-6 mb-3">
+                            <div class="card border">
+                                <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                    <img src="{{ link.qrcode.url }}" class="card-img-top" />
+                                    <a href="{{ link.qrcode.url }}">
+                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <strong>Shortener link</strong><br>
+                                        <a href="{{ link.get_absolute_url }}">{{ request.scheme }}://{{ request.get_host }}/{{ link.slug }}</a>
+                                    </p>
+                                    <p class="card-text">
+                                        <strong>Long link</strong><br>
+                                        <a href="{{ link.long_link }}">{{ link.long_link|truncatechars:40 }}</a>
+                                    </p>
+                                    <p class="card-text">
+                                        <strong>Transitions: </strong>
+                                        {{ link.total_transitions }}
+                                    </p>
+                                    <canvas id="chart-{{ link.slug }}" height="200px"></canvas>
+                                    <script>
+                                        new Chart(document.getElementById('chart-{{ link.slug }}'), {
+                                            type: 'line',
+                                            data: {
+                                                labels: {{ link.get_transitions_per_day.0| safe }},
+                                            datasets: [{
+                                                label: 'Transitions per day',
+                                                data: {{ link.get_transitions_per_day.1| safe }},
+                                            fill: false,
+                                            borderColor: '#3266F1',
+                                            tension: 0.1
+                                                }]
+                                            },
+                                            options: {
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true
+                                                }
+                                            }
+                                        }
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <nav aria-label="pagination">
+                        <ul class="pagination">
+                            {% if page_obj.has_other_pages %}
+
+                            {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a>
+                            </li>
+                            {% endif %}
+
+                            {% for page in page_obj.paginator.page_range %}
+                            {% if page_obj.number == page %}
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="?page={{ page }}">{{ page }}
+                                    <span class="visually-hidden">(current)</span>
+                                </a>
+                            </li>
+                            {% elif page > page_obj.number|add:-3 and page < page_obj.number|add:3 %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                            {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                            </li>
+                            {% endif %}
+
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,10 +1,12 @@
+import datetime
+import json
 from pathlib import Path
 from django.db import models
 from django.urls import reverse_lazy
-from django.core.files import File
+from django.utils import timezone, dateformat
+
 from common.util.utils import get_unique_slug_or_existing, generate_and_save_qrcode
 from accounts.models import CustomUser
-
 
 class Link(models.Model):
     long_link = models.URLField()
@@ -19,6 +21,20 @@ class Link(models.Model):
     
     def get_absolute_url(self):
         return reverse_lazy('shortener:redirect_somewhere', kwargs={'slug':self.slug})
+    
+    @classmethod
+    def get_user_links(cls, request):
+        return cls.objects.filter(user=request.user)
+    
+    def total_transitions(self):
+        return self.transitions.count()
+    
+    def get_transitions_per_day(self, days=10):
+        now = timezone.now()
+        days = [now - datetime.timedelta(i) for i in range(days-1, -1, -1)]
+        values = [self.transitions.filter(link_dt__date=day).count() for day in days]
+        days = [dateformat.format(day, 'd.m') for day in days]
+        return days, values
     
     def save(self, *args, **kwargs):
         self.slug = get_unique_slug_or_existing(self, length=7)

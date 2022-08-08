@@ -15,4 +15,3 @@ def send_activation_notification(user):
     subject = render_to_string('accounts/email/activation_letter_subject.txt', context)
     body_text = render_to_string('accounts/email/activation_letter_body.txt', context)
     user.email_user(subject, body_text)
-    
